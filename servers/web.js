@@ -190,7 +190,9 @@ var initialize = function(api, options, next){
         connection.rawConnection.res.writeHead(responseHttpCode, headers);
         fileStream.pipe(compressor).pipe(connection.rawConnection.res);
       }else{
-        headers.push(['Content-Length', fileLength]);
+        if(fileLength){
+          headers.push(['Content-Length', fileLength]);
+        }
         connection.rawConnection.res.writeHead(responseHttpCode, headers);
         fileStream.pipe(connection.rawConnection.res);
       }
