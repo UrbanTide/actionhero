@@ -163,14 +163,14 @@ var initialize = function(api, options, next){
     // https://nodejs.org/api/zlib.html#zlib_zlib_createinflate_options
     // See http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3
     if(api.config.servers.web.compress === true){
-      if(acceptEncoding.match(/\bdeflate\b/)){
-        headers.push(['Content-Encoding', 'deflate']);
-        compressor = zlib.createDeflate();
-        stringEncoder = zlib.deflate;
-      }else if(acceptEncoding.match(/\bgzip\b/)){
-        headers.push(['Content-Encoding', 'gzip']);
-        compressor = zlib.createGzip();
-        stringEncoder = zlib.gzip;
+        if(acceptEncoding.match(/\bgzip\b/)){
+            headers.push(['Content-Encoding', 'gzip']);
+            compressor = zlib.createGzip();
+            stringEncoder = zlib.gzip;
+        } else if(acceptEncoding.match(/\bdeflate\b/)){
+          headers.push(['Content-Encoding', 'deflate']);
+          compressor = zlib.createDeflate();
+          stringEncoder = zlib.deflate;
       }
     }
 
